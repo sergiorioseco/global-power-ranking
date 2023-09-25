@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League Power Ranking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>League Global Power Ranking</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Team</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="team-table-body">
+        </tbody>
+    </table>
+
+    <script>
+        // Cargar datos desde ranking.json
+        fetch('ranking.json')
+            .then(response => response.json())
+            .then(jsonData => {
+                const tbody = document.getElementById("team-table-body");
+
+                jsonData.forEach(data => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${data.index + 1}</td>
+                        <td>${data.name}</td>
+                        <td>${data.score.toFixed(0)}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar los datos desde ranking.json:', error);
+            });
+    </script>
+</body>
+</html>
